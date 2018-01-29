@@ -1,8 +1,8 @@
 {
-  "name": "golang-react-template",
-  "author": "Andrew Odewahn",
+  "name": "willandjagscoolwebapp",
+  "author": "Jeremy Garcia and Willem Thorbecke",
   "version": "0.1.0",
-  "description": "Startup template for golang apps with React frontend",
+  "description": "our cool app",
   "main": "",
   "scripts": {
     "start": "npm run frontend & npm run backend",
