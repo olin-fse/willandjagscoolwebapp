@@ -10,12 +10,12 @@
     "backend": "cd backend; gin"
   },
   "dependencies": {
-    "browserify": "^12.0.1",
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3",
-    "reactify": "^1.1.1",
-    "watchify": "^3.6.1",
-    "webpack": "^3.10.0"
+    "browserify": "12.0.1",
+    "react": "0.14.3",
+    "react-dom": "0.14.3",
+    "reactify": "1.1.1",
+    "watchify": "3.6.1",
+    "webpack": "3.10.0"
   },
   "browserify": {
     "transform": [
