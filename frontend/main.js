@@ -1,9 +1,48 @@
-(function() {
-  // React
-  var React = require('react');
-  var ReactDOM = require('react-dom');
+var React = require('react');
+var ReactDOM = require('react-dom');
 
-  var Hello = require("./components/hello");
-  ReactDOM.render(<Hello />, document.getElementById('app'));
+var SubmitOnEnterForm = require('./components/SubmitOnEnterForm');
+var WelcomePage = require('./components/WelcomePage');
 
-})();
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {user: null};
+    this.setUsername = this.setUsername.bind(this);
+  }
+
+  setUsername(username) {
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+      },
+      body: 'username='+username
+    })
+      .then((response) => { return response.json(); })
+      .then((json) => { this.setState({ user: json.user }); });
+  }
+
+  render () {
+    let loginForm = (
+      <div>
+       <SubmitOnEnterForm
+       placeholder="Enter Username"
+       onSubmit={this.setUsername} />
+      </div>
+    )
+
+    let welcomePage = <WelcomePage user={this.state.user}/>
+
+    if (this.state.user) {
+      return welcomePage;
+    } else{
+      return loginForm;
+    }
+  }
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('app')
+)
