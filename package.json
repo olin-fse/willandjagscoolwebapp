@@ -6,7 +6,7 @@
   "main": "",
   "scripts": {
     "start": "npm run frontend & npm run backend",
-    "frontend": "watchify -o backend/public/bundle.js -v -d frontend/main.js",
+    "frontend": "watchify -o backend/public/bundle.js -v -d frontend/main.jsx",
     "backend": "cd backend; go run main.go"
   },
   "dependencies": {
