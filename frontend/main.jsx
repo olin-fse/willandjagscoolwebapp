@@ -1,8 +1,8 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var SubmitOnEnterForm = require('./components/SubmitOnEnterForm.jsx');
-var WelcomePage = require('./components/WelcomePage.jsx');
+import SubmitOnEnterForm from './components/SubmitOnEnterForm.jsx';
+import WelcomePage from './components/WelcomePage.jsx';
 
 class App extends React.Component {
   constructor(props){

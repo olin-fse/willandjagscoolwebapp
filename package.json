@@ -5,21 +5,24 @@
   "description": "our cool app",
   "main": "",
   "scripts": {
-    "start": "npm run frontend & npm run backend",
-    "frontend": "watchify -o backend/public/bundle.js -v -d frontend/main.jsx",
-    "backend": "cd backend; go run main.go"
+    "start": "npm run build & npm run backend",
+    "backend": "cd backend; go run main.go",
+    "build": "webpack"
   },
   "dependencies": {
-    "browserify": "12.0.1",
+    "babel-runtime": "^6.26.0",
     "react": "0.14.3",
     "react-dom": "0.14.3",
-    "reactify": "1.1.1",
-    "watchify": "3.6.1",
     "webpack": "3.10.0"
   },
-  "browserify": {
-    "transform": [
-      "reactify"
-    ]
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
   }
 }
