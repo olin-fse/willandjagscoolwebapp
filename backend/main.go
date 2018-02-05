@@ -36,15 +36,15 @@ func main() {
     err := db.QueryRow("SELECT user_id FROM Users where display_name=?", display_name).Scan(&user_id)
 
     switch {
-    case err == sql.ErrNoRows:
-      fmt.Println("No user")
-    case err != nil:
-      fmt.Println(err)
-    default:
-      fmt.Printf("Username is %s\n", display_name)
-      c.JSON(200, gin.H{
-        "user": User{user_id,display_name},
-      })
+      case err == sql.ErrNoRows:
+        fmt.Println("No user")
+      case err != nil:
+        fmt.Println(err)
+      default:
+        fmt.Printf("Username is %s\n", display_name)
+        c.JSON(200, gin.H{
+          "user": User{user_id,display_name},
+        })
     }
 
   })
