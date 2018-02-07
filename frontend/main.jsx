@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import SubmitOnEnterForm from './components/SubmitOnEnterForm.jsx';
 import WelcomePage from './components/WelcomePage.jsx';
+import toDo from "./containers/toDo.jsx";
+
 
 class App extends React.Component {
   constructor(props){
@@ -34,8 +36,10 @@ class App extends React.Component {
 
     let welcomePage = <WelcomePage user={this.state.user}/>
 
+    let toDo = <toDo/>
+
     if (this.state.user) {
-      return welcomePage;
+      return toDo;
     } else{
       return loginForm;
     }
