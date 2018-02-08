@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
-export default class Title extends Component {
+class Title extends React.Component {
+  constructor(props){
+    super(props);
+  }
   render() {
     const { children } = this.props;
 
@@ -22,3 +25,5 @@ const styles = {
     color: "white"
   }
 };
+
+export default Title;

@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
-export default class List extends Component {
+class List extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
   renderItem = (text, i) => {
     const { onClickItem } = this.props;
 
@@ -33,3 +37,5 @@ const styles = {
     padding: 15
   }
 };
+
+export default List;

@@ -4,7 +4,10 @@ import List from '../components/List.jsx'
 import Input from '../components/Input.jsx'
 import Title from '../components/Title.jsx'
 
-export default class App extends Component {
+class ToDo extends React.Component {
+  constructor(props){
+    super(props);
+  }
 
   state = {
     todos: ['Click to remove', 'Learn React', 'Write Code', 'Ship App'],
@@ -53,3 +56,5 @@ const styles = {
     flexDirection: 'column',
   }
 }
+
+export default ToDo;

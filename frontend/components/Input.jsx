@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
-export default class Input extends Component {
+class Input extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
   state = {
     value: ""
   };
@@ -45,3 +49,5 @@ const styles = {
     borderWidth: 0
   }
 };
+
+export default Input;
