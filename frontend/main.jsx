@@ -4,6 +4,10 @@ import ReactDOM from 'react-dom';
 import SubmitOnEnterForm from './components/SubmitOnEnterForm.jsx';
 import WelcomePage from './components/WelcomePage.jsx';
 import ToDo from "./containers/ToDo.jsx";
+import BasicCalendar from './containers/BasicCalendar.jsx';
+import Basic from './containers/Basic.jsx';
+import 'react-big-calendar/lib/less/styles.less'
+import 'bootstrap/dist/css/bootstrap.css'
 
 
 class App extends React.Component {
@@ -36,10 +40,12 @@ class App extends React.Component {
 
     let welcomePage = <WelcomePage user={this.state.user}/>
 
-    let toDoList = <ToDo />
+    let toDoList = <ToDo/>
+
+    let calendar = <Basic/>
 
     if (this.state.user) {
-      return toDoList;
+      return calendar;
     } else{
       return loginForm;
     }
