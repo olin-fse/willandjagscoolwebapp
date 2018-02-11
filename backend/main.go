@@ -49,5 +49,7 @@ func main() {
 
   })
 
+  //r.GET("/todo", fetchAllTodo)
+
   r.Run(":3000")
 }

@@ -1,2 +1,4 @@
 node_modules/
-node_modules/
+backend/public/bundle.js
+backend/gin-bin
+backend/main
