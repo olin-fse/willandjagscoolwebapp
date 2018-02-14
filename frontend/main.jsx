@@ -7,6 +7,10 @@ import ToDo from "./containers/ToDo.jsx";
 import LocalLogin from "./components/LocalLogin.jsx"
 import 'react-big-calendar/lib/less/styles.less'
 import 'bootstrap/dist/css/bootstrap.css'
+//a lot of problems with the loader here, e.g., can't load a .ttf file or .svg
+//import 'font-awesome/css/font-awesome.min.css'
+
+import localizer from 'react-big-calendar/lib/localizers/globalize'
 
 
 class App extends React.Component {
