@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import SubmitOnEnterForm from './components/SubmitOnEnterForm.jsx';
-import WelcomePage from './components/WelcomePage.jsx';
 import ToDo from "./containers/ToDo.jsx";
-import BasicCalendar from './containers/BasicCalendar.jsx';
-import Basic from './containers/Basic.jsx';
+//import BasicCalendar from './containers/BasicCalendar.jsx';
+//import Basic from './containers/Basic.jsx';
+import LocalLogin from "./components/LocalLogin.jsx"
 import 'react-big-calendar/lib/less/styles.less'
 import 'bootstrap/dist/css/bootstrap.css'
 
@@ -13,41 +12,24 @@ import 'bootstrap/dist/css/bootstrap.css'
 class App extends React.Component {
   constructor(props){
     super(props);
-    this.state = {user: null};
-    this.setUsername = this.setUsername.bind(this);
+    this.state = {
+      user: null
+    };
+
+    // this.setUser = this.setUser.bind(this);
   }
 
-  setUsername(username) {
-    fetch('/login', {
-      method: 'POST',
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-      },
-      body: 'username='+username
-    })
-      .then((response) => { return response.json(); })
-      .then((json) => { this.setState({ user: json.user }); });
-  }
+  setUser = (user) => {
+    this.setState({ user });
+  };
 
   render () {
-    let loginForm = (
-      <div>
-       <SubmitOnEnterForm
-       placeholder="Enter Username"
-       onSubmit={this.setUsername} />
-      </div>
-    )
-
-    let welcomePage = <WelcomePage user={this.state.user}/>
-
-    let toDoList = <ToDo/>
-
-    let calendar = <Basic/>
-
     if (this.state.user) {
-      return calendar;
+      console.log('success')
+      return <ToDo/>;
     } else{
-      return loginForm;
+      console.log('fail')
+      return <LocalLogin setUser={this.setUser}/>;
     }
   }
 }

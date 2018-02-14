@@ -3,6 +3,9 @@ module.exports = {
   output: {
     filename: './backend/public/bundle.js',
   },
+  watchOptions: {
+    poll: true
+  },
   module: {
     rules: [
       {

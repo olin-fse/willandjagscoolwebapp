@@ -13,6 +13,12 @@ type User struct {
   Username string
 }
 
+type Login struct {
+  User     string `json:"username" binding:"required"`
+  Password string `json:"password" binding:"required"`
+}
+
+
 func main() {
   fmt.Println("DB running")
 
@@ -29,22 +35,36 @@ func main() {
 
   //INSERT INTO Users (email, display_name, password) VALUES ('jag@gmail.com','jag','password');
   r.POST("/login", func(c *gin.Context) {
-    display_name := c.PostForm("username")
-    fmt.Println(display_name)
 
-    var user_id int
-    err := db.QueryRow("SELECT user_id FROM Users where display_name=?", display_name).Scan(&user_id)
+    var json Login
+    if err := c.ShouldBindJSON(&json); err == nil {
+      var user_id int
+      var password string
 
-    switch {
-      case err == sql.ErrNoRows:
-        fmt.Println("No user")
-      case err != nil:
-        fmt.Println(err)
-      default:
-        fmt.Printf("Username is %s\n", display_name)
-        c.JSON(200, gin.H{
-          "user": User{user_id,display_name},
-        })
+      fmt.Println(json.Password)
+
+      err := db.QueryRow("SELECT user_id FROM Users where display_name=?", json.User).Scan(&user_id)
+      db.QueryRow("SELECT password FROM Users where display_name=?", json.User).Scan(&password)
+
+      fmt.Println(password)
+
+      switch {
+        case err == sql.ErrNoRows:
+          fmt.Println("No user")
+        case err != nil:
+          fmt.Println(err)
+        default:
+          if json.Password == password {
+            fmt.Printf("Username is %s\n", json.User)
+            c.JSON(200, gin.H{
+              "user": User{user_id,json.User},
+            })
+          } else {
+            fmt.Println("wrong password")
+          }
+      }
+    } else {
+      c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
     }
 
   })
