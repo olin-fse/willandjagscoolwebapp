@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import ToDo from "./containers/ToDo.jsx";
-//import BasicCalendar from './containers/BasicCalendar.jsx';
-//import Basic from './containers/Basic.jsx';
+import BasicCalendar from './containers/BasicCalendar.jsx';
+import Basic from './containers/Basic.jsx';
 import LocalLogin from "./components/LocalLogin.jsx"
 import 'react-big-calendar/lib/less/styles.less'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -30,7 +30,7 @@ class App extends React.Component {
   render () {
     if (this.state.user) {
       console.log('success')
-      return <ToDo/>;
+      return <BasicCalendar/>;
     } else{
       console.log('fail')
       return <LocalLogin setUser={this.setUser}/>;

@@ -5,7 +5,7 @@ class LocalLogin extends Component {
     super(props);
     this.state = {
       username: 'jag',
-      password: '123'
+      password: 'password'
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
