@@ -30,7 +30,7 @@ class App extends React.Component {
   render () {
     if (this.state.user) {
       console.log('success')
-      return <BasicCalendar/>;
+      return <Basic/>;
     } else{
       console.log('fail')
       return <LocalLogin setUser={this.setUser}/>;
