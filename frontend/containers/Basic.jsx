@@ -4,6 +4,7 @@ import events from '../events'
 
 let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
+
 let Basic = () => (
   <BigCalendar
     events={events}

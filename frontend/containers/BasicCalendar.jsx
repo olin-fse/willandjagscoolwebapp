@@ -6,14 +6,6 @@ import BigCalendar from 'react-big-calendar'
 import localizer from 'react-big-calendar/lib/localizer'
 import TimeGrid from 'react-big-calendar/lib/TimeGrid'
 
-
-// import 'bootstrap/dist/css/bootstrap.min.css'
-// import 'font-awesome/css/font-awesome.min.css'
-import 'react-big-calendar/lib/less/styles.less'
-// import './styles.less'
-// import './prism.less'
-
-
 BigCalendar.momentLocalizer(moment);
 
 const getRange = (date, culture) => {
@@ -60,7 +52,7 @@ MyWeek.title = (date, { formats, culture }) => {
 let BasicCalendar = () => (
   <BigCalendar
     events={events}
-    defaultDate={new Date(2015, 3, 1)}
+    defaultDate={new Date(2017, 3, 1)}
     views={{ month: true, week: MyWeek }}
     test="io"
   />

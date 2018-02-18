@@ -4,13 +4,17 @@ import ReactDOM from 'react-dom';
 import ToDo from "./containers/ToDo.jsx";
 import BasicCalendar from './containers/BasicCalendar.jsx';
 import Basic from './containers/Basic.jsx';
-import LocalLogin from "./components/LocalLogin.jsx"
-import 'react-big-calendar/lib/less/styles.less'
-import 'bootstrap/dist/css/bootstrap.css'
-//a lot of problems with the loader here, e.g., can't load a .ttf file or .svg
-//import 'font-awesome/css/font-awesome.min.css'
+import Calendar from './containers/Calendar.jsx';
+import LocalLogin from "./components/LocalLogin.jsx";
 
-import localizer from 'react-big-calendar/lib/localizers/globalize'
+import localizer from 'react-big-calendar/lib/localizers/moment.js';
+import moment from 'moment';
+
+localizer(moment);
+
+import 'react-big-calendar/lib/less/styles.less';
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 
 class App extends React.Component {
@@ -30,7 +34,7 @@ class App extends React.Component {
   render () {
     if (this.state.user) {
       console.log('success')
-      return <Basic/>;
+      return <Calendar/>;
     } else{
       console.log('fail')
       return <LocalLogin setUser={this.setUser}/>;
