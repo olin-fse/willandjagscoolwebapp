@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 import ToDo from "./containers/ToDo.jsx";
 import BasicCalendar from './containers/BasicCalendar.jsx';
-import Basic from './containers/Basic.jsx';
 import Calendar from './containers/Calendar.jsx';
+import CalendarApp from './containers/CalendarApp.jsx';
 import LocalLogin from "./components/LocalLogin.jsx";
 
 import localizer from 'react-big-calendar/lib/localizers/moment.js';
@@ -23,8 +23,6 @@ class App extends React.Component {
     this.state = {
       user: null
     };
-
-    // this.setUser = this.setUser.bind(this);
   }
 
   setUser = (user) => {
@@ -34,7 +32,7 @@ class App extends React.Component {
   render () {
     if (this.state.user) {
       console.log('success')
-      return <Calendar/>;
+      return <CalendarApp/>;
     } else{
       console.log('fail')
       return <LocalLogin setUser={this.setUser}/>;

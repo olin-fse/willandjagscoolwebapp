@@ -1,37 +1,62 @@
-import React from 'react';
-import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
+import events from '../events';
+import React from 'react'
+import dates from 'date-arithmetic'
+import BigCalendar from 'react-big-calendar'
+import localizer from 'react-big-calendar/lib/localizer'
+import TimeGrid from 'react-big-calendar/lib/TimeGrid'
 
-BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
+BigCalendar.momentLocalizer(moment);
 
+const getRange = (date, culture) => {
+  let firstOfWeek = localizer.startOfWeek(culture)
+  let start = dates.startOf(date, 'week', firstOfWeek)
+  let end = dates.endOf(date, 'week', firstOfWeek)
 
+  if (firstOfWeek === 1) {
+    end = dates.subtract(end, 2, 'day')
+  } else {
+    start = dates.add(start, 1, 'day')
+    end = dates.subtract(end, 1, 'day')
+  }
 
-const Calendar = props => {
-    
-  const dummyEvents = [
-    {
-      allDay: false,
-      end: new Date('December 10, 2017 11:13:00'),
-      start: new Date('December 09, 2017 11:13:00'),
-      title: 'hi',
-    },
-    {
-      allDay: true,
-      end: new Date('December 09, 2017 11:13:00'),
-      start: new Date('December 09, 2017 11:13:00'),
-      title: 'All Day Event',
-    },
-  ];
-  return (
-     <div>
-         <BigCalendar
-          events={dummyEvents}
-          startAccessor="startDate"
-          endAccessor="endDate"
-          style={{height: 800}}
-        />
-     </div>
-  )
+  return dates.range(start, end)
 }
 
-export default Calendar;
+class MyWeek extends React.Component {
+  render() {
+    let { date, culture } = this.props
+    let range = getRange(date, culture)
+
+    return <TimeGrid {...this.props} range={range} eventOffset={15} />
+  }
+}
+
+MyWeek.navigate = (date, action) => {
+  switch (action) {
+    case BigCalendar.Navigate.PREVIOUS:
+      return dates.add(date, -1, 'week')
+
+    case BigCalendar.Navigate.NEXT:
+      return dates.add(date, 1, 'week')
+
+    default:
+      return date
+  }
+}
+
+MyWeek.title = (date, { formats, culture }) => {
+  return `My awesome week: ${Date.toLocaleString()}`
+}
+
+let BasicCalendar = () => (
+  <BigCalendar
+    events={events}
+    defaultDate={new Date(2017, 3, 1)}
+    views={{ month: true, week: MyWeek }}
+    test="io"
+    style={{height: 800}}
+  />
+)
+
+export default BasicCalendar;
