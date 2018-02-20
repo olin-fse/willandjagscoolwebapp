@@ -16,9 +16,21 @@ class ToDo extends React.Component {
   onAddTodo = (text) => {
     const {todos} = this.state
 
-    this.setState({
-      todos: [text, ...todos],
+    console.log(JSON.stringify({text}));
+
+    fetch('/addTodo', {
+      method: 'POST',
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      },
+      body: JSON.stringify({text})
     })
+      .then((response) => { return response.json(); })
+      .then((json) => { 
+        this.setState({
+          todos: [text, ...todos],
+        })
+      });
   }
 
   onRemoveTodo = (index) => {

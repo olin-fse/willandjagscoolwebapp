@@ -36,6 +36,8 @@ class LocalLogin extends Component {
       password: this.state.password,
     }
 
+    console.log(JSON.stringify(data));
+
     fetch('/login', {
       method: 'POST',
       headers: {
