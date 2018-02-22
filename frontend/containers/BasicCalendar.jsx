@@ -9,14 +9,14 @@ const BasicCalendar = props => {
   const dummyEvents = [
     {
       allDay: false,
-      end: new Date('December 10, 2017 11:13:00'),
-      start: new Date('December 09, 2017 11:13:00'),
+      endDate: new Date('December 10, 2017 11:13:00'),
+      startDate: new Date('December 09, 2017 11:13:00'),
       title: 'hi',
     },
     {
       allDay: true,
-      end: new Date('December 09, 2017 11:13:00'),
-      start: new Date('December 09, 2017 11:13:00'),
+      startDate: new Date('December 09, 2017 11:13:00'),
+      endDate: new Date('December 09, 2017 11:13:00'),
       title: 'All Day Event',
     },
   ];
@@ -27,6 +27,7 @@ const BasicCalendar = props => {
           startAccessor="startDate"
           endAccessor="endDate"
           style={{height: 800}}
+          defaultDate={new Date()}
         />
      </div>
   )

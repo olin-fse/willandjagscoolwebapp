@@ -14,6 +14,8 @@ class ToDo extends React.Component {
   }
 
   componentDidMount(){
+    console.log("i mounted boiii");
+
     fetch('/showTodos', {
       method: 'GET',
       headers: {

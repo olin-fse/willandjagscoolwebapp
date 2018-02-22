@@ -8,6 +8,8 @@ class CalendarApp extends React.Component {
 
     constructor(props){
         super(props);
+
+        console.log('constr');
     }
 
     render() {
