@@ -11,6 +11,4 @@ CREATE TABLE Tasks (
   user_id INT,
   FOREIGN KEY (user_id) REFERENCES Users (user_id),
   name VARCHAR(80),
-  difficulty VARCHAR(80),
-  length VARCHAR(80)
 ) ENGINE=INNODB;

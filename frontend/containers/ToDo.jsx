@@ -14,11 +14,7 @@ class ToDo extends React.Component {
   }
 
   componentDidMount(){
-<<<<<<< HEAD
     console.log("i mounted boiii");
-=======
-    console.log('mounted');
->>>>>>> 3e8366196b272c6610e02f7e47dcf79a799c2847
 
     fetch('/showTodos', {
       method: 'GET',
@@ -33,16 +29,21 @@ class ToDo extends React.Component {
   onAddTodo = (text) => {
     const {todos} = this.state
 
-    console.log(JSON.stringify({text}));
+    const data = {
+      userId: this.props.user.Id,
+      text: text,
+    }
+
+    console.log(JSON.stringify(data));
 
     fetch('/addTodo', {
       method: 'POST',
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       },
-      body: JSON.stringify({text})
+      body: JSON.stringify(data)
     })
-      .then((response) => { return response.json(); })
+      .then((response) => {return response.json(); })
       .then((json) => { 
         this.setState({
           todos: [text, ...todos],

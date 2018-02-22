@@ -20,13 +20,8 @@ type Login struct {
 }
 
 type AddTodo struct {
+  UserId int `json:"userId" binding:"required"`
   Todo string `json:"text" binding:"required"`
-}
-
-type Task struct {
-  Name string
-  Difficulty string
-  Length string
 }
 
 func main() {
@@ -83,18 +78,24 @@ func main() {
   r.POST("/addTodo", func(c *gin.Context) {
     var json AddTodo
 
-    if err := c.ShouldBindJSON(&json); err == nil {
-      stmtIns, err := db.Prepare("INSERT INTO Tasks (user_id, name, difficulty, length) VALUES( ?, ?, ?, ? )")
-      if err != nil {
-        fmt.Println(err)
-      }
-      _,err = stmtIns.Exec(1,json,"1","1")
-      
-      fmt.Println(json)
-      c.JSON(200, gin.H{
-        "task": json,
-      })
+    err := c.ShouldBindJSON(&json)
+    if (err != nil) {
+      fmt.Println(err.Error())
+      c.JSON(500, nil)
     }
+
+    stmtIns, err := db.Prepare("INSERT INTO Tasks (user_id, name) VALUES( ?, ?)")
+    if err != nil {
+      fmt.Println(err)
+    }
+
+    _,err = stmtIns.Exec(json.UserId,json.Todo)
+
+    if err != nil {
+      c.JSON(500, nil)
+    }
+
+    c.JSON(200, nil)
   })
 
   r.GET("/showTodos", func(c *gin.Context) {
