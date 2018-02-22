@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Entry is removed when clicked 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "column",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "backgroundColor": "skyblue",
+        "padding": 15,
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "color": "white",
+          "textAlign": "center",
+        }
+      }
+    >
+      To-Do List
+    </div>
+  </div>
+  <input
+    onChange={[Function]}
+    onKeyPress={[Function]}
+    placeholder="Type a todo, then hit enter!"
+    style={
+      Object {
+        "borderWidth": 0,
+        "fontSize": "100%",
+        "padding": 15,
+      }
+    }
+    type="text"
+    value=""
+  />
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "flexDirection": "column",
+      }
+    }
+  >
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "whitesmoke",
+          "marginBottom": 5,
+          "padding": 15,
+        }
+      }
+    >
+      Click to remove
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "whitesmoke",
+          "marginBottom": 5,
+          "padding": 15,
+        }
+      }
+    >
+      Learn React
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "whitesmoke",
+          "marginBottom": 5,
+          "padding": 15,
+        }
+      }
+    >
+      Write Code
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "whitesmoke",
+          "marginBottom": 5,
+          "padding": 15,
+        }
+      }
+    >
+      Ship App
+    </div>
+  </div>
+</div>
+`;

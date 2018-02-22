@@ -14,11 +14,7 @@ class ToDo extends React.Component {
   }
 
   componentDidMount(){
-<<<<<<< HEAD
-    console.log("i mounted boiii");
-=======
     console.log('mounted');
->>>>>>> 3e8366196b272c6610e02f7e47dcf79a799c2847
 
     fetch('/showTodos', {
       method: 'GET',
