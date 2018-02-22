@@ -5,6 +5,7 @@ import (
   "database/sql"
   _ "github.com/go-sql-driver/mysql"
   "net/http"
+  "github.com/gin-contrib/static"
   "github.com/gin-gonic/gin"
 )
 
@@ -40,7 +41,8 @@ func main() {
   defer db.Close()
 
   r:= gin.Default()
-  r.StaticFS("/", http.Dir("./public"))
+
+  r.Use(static.Serve("/", static.LocalFile("./public", true)))
 
   //INSERT INTO Users (email, display_name, password) VALUES ('jag@gmail.com','jag','password');
   r.POST("/login", func(c *gin.Context) {
@@ -94,7 +96,12 @@ func main() {
       })
     }
   })
-  //r.GET("/todo", fetchAllTodo)
+
+  r.GET("/showTodos", func(c *gin.Context) {
+    c.JSON(200, gin.H{
+      "tasks": "task1",
+    })
+  })
 
   r.Run(":3000")
 }
