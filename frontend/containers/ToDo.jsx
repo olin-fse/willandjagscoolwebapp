@@ -29,16 +29,21 @@ class ToDo extends React.Component {
   onAddTodo = (text) => {
     const {todos} = this.state
 
-    console.log(JSON.stringify({text}));
+    const data = {
+      userId: this.props.user.Id,
+      text: text,
+    }
+
+    console.log(JSON.stringify(data));
 
     fetch('/addTodo', {
       method: 'POST',
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       },
-      body: JSON.stringify({text})
+      body: JSON.stringify(data)
     })
-      .then((response) => { return response.json(); })
+      .then((response) => {return response.json(); })
       .then((json) => { 
         this.setState({
           todos: [text, ...todos],
