@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import List from '../components/List.jsx'
 import Input from '../components/Input.jsx'
 import Title from '../components/Title.jsx'
+import Submit from '../components/Submit.jsx'
 
 class ToDo extends React.Component {
   constructor(props){
@@ -10,7 +11,7 @@ class ToDo extends React.Component {
   }
 
   state = {
-    todos: [null],
+    todos: [],
   }
 
   populateTodos() {
@@ -80,14 +81,22 @@ class ToDo extends React.Component {
       });
   }
 
+  handleClick = () => {
+    const { onSubmitToCal } = this.props;
+    const {todos} = this.state;
+    console.log("handling click");
+    console.log(todos)
+    onSubmitToCal(todos);
+  }
+
   render() {
     const {todos} = this.state
 
     return (
       <div style={styles.container}>
-        <Title>
+        <h1 id="todo-title">
           To-Do List
-        </Title>
+        </h1>
         <Input
           placeholder={'Type a todo, then hit enter!'}
           onSubmitEditing={this.onAddTodo}
@@ -96,7 +105,9 @@ class ToDo extends React.Component {
           list={todos}
           onClickItem={this.onRemoveTodo}
         />
-        <Submit/>
+        <button onClick={this.handleClick}>
+          Add to Calendar
+        </button>
       </div>
     )
   }
