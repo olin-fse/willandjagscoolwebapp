@@ -13,17 +13,16 @@ class ToDo extends React.Component {
     todos: ['Click to remove', 'Learn React', 'Write Code', 'Ship App'],
   }
 
-  // componentdidmount(){
-  //   fetch('/showTodos', {
-  //     method: 'GET',
-  //     headers: {
-  //       "Content-type": "application/json; charset=UTF-8"
-  //     },
-  //   })
-  //     .then((response) => { return response.json(); })
-  //     //.then((json) => {        })
-  //     });
-  // }
+  componentDidMount(){
+    fetch('/showTodos', {
+      method: 'GET',
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      },
+    })
+      .then((response) => { return response.json(); })
+      .then((json) => { console.log(json) });
+  }
 
   onAddTodo = (text) => {
     const {todos} = this.state
