@@ -50,7 +50,7 @@ class ToDo extends React.Component {
       },
       body: JSON.stringify(data)
     })
-      .then((response) => {return response.json(); })
+      .then((response) => { return response.json(); })
       .then((json) => { 
         this.setState({
           todos: [text, ...todos],
@@ -61,9 +61,23 @@ class ToDo extends React.Component {
   onRemoveTodo = (index) => {
     const {todos} = this.state
 
-    this.setState({
-      todos: todos.filter((todo, i) => i !== index),
+    var deletedItem = todos[index];
+
+    console.log(JSON.stringify({deletedItem}))
+
+    fetch('/deleteTodo', {
+      method: 'POST',
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      },
+      body: JSON.stringify({deletedItem})
     })
+      .then((response) => { console.log(response); return response.json(); })
+      .then((json) => { 
+        this.setState({
+          todos: todos.filter((todo, i) => i !== index),
+        })
+      });
   }
 
   render() {

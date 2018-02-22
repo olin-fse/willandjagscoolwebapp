@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gin-contrib/static"
@@ -24,6 +23,10 @@ type Login struct {
 type AddTodo struct {
 	UserId int    `json:"userId" binding:"required"`
 	Todo   string `json:"text" binding:"required"`
+}
+
+type DeleteTodo struct {
+  Name string `json:"deletedItem" binding:"required"`
 }
 
 type Task struct {
@@ -50,34 +53,37 @@ func main() {
 	r.POST("/login", func(c *gin.Context) {
 
 		var json Login
-		if err := c.ShouldBindJSON(&json); err == nil {
-			var user_id int
-			var password string
 
-			fmt.Println(json.Password)
+    err := c.ShouldBindJSON(&json)
+    if err != nil {
+      fmt.Println(err.Error())
+      c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    }
 
-			err := db.QueryRow("SELECT user_id FROM Users where display_name=?", json.User).Scan(&user_id)
-			db.QueryRow("SELECT password FROM Users where display_name=?", json.User).Scan(&password)
+		var user_id int
+		var password string
 
-			fmt.Println(password)
+		fmt.Println(json.Password)
 
-			switch {
-			case err == sql.ErrNoRows:
-				fmt.Println("No user")
-			case err != nil:
-				fmt.Println(err)
-			default:
-				if json.Password == password {
-					fmt.Printf("Username is %s\n", json.User)
-					c.JSON(200, gin.H{
-						"user": User{user_id, json.User},
-					})
-				} else {
-					fmt.Println("wrong password")
-				}
+		err2 := db.QueryRow("SELECT user_id FROM Users where display_name=?", json.User).Scan(&user_id)
+		db.QueryRow("SELECT password FROM Users where display_name=?", json.User).Scan(&password)
+
+		fmt.Println(password)
+
+		switch {
+		case err2 == sql.ErrNoRows:
+			fmt.Println("No user")
+		case err2 != nil:
+			fmt.Println(err2)
+		default:
+			if json.Password == password {
+				fmt.Printf("Username is %s\n", json.User)
+				c.JSON(200, gin.H{
+					"user": User{user_id, json.User},
+				})
+			} else {
+				fmt.Println("wrong password")
 			}
-		} else {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		}
 
 	})
@@ -105,6 +111,28 @@ func main() {
 		c.JSON(200, nil)
 	})
 
+  r.POST("/deleteTodo", func(c *gin.Context) {
+    var json DeleteTodo
+
+    err := c.ShouldBindJSON(&json)
+    if err != nil {
+      fmt.Println(err.Error())
+      c.JSON(500, nil)
+    }
+    stmtIns, err := db.Prepare("DELETE FROM Tasks WHERE name=?")
+    if err != nil {
+      fmt.Println(err)
+    }
+
+    _, err = stmtIns.Exec(json.Name)
+    fmt.Println(json)
+    if err != nil {
+      c.JSON(500, nil)
+    }
+
+    c.JSON(200, nil)
+  })
+
 	r.GET("/showTodos", func(c *gin.Context) {
 
 		var res []Task
@@ -112,7 +140,7 @@ func main() {
 		rows, err := db.Query("SELECT * FROM Tasks")
 
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println(err)
 		}
 
 		defer rows.Close()
@@ -120,7 +148,7 @@ func main() {
 		for rows.Next() {
 			var task Task
 			if err := rows.Scan(&task.UserId, &task.Name); err != nil {
-				log.Fatal(err)
+				fmt.Println(err)
 			} else {
 				res = append(res, task)
 			}
