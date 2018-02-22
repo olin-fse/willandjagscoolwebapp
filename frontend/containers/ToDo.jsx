@@ -10,10 +10,12 @@ class ToDo extends React.Component {
   }
 
   state = {
-    todos: ['Click to remove', 'Learn React', 'Write Code', 'Ship App'],
+    todos: [null],
   }
 
   componentDidMount(){
+    console.log('mounted');
+
     fetch('/showTodos', {
       method: 'GET',
       headers: {
@@ -21,7 +23,7 @@ class ToDo extends React.Component {
       },
     })
       .then((response) => { return response.json(); })
-      .then((json) => { console.log(json) });
+      .then((json) => { console.log(json); this.setState(json); });
   }
 
   onAddTodo = (text) => {
