@@ -13,9 +13,16 @@ class ToDo extends React.Component {
     todos: [null],
   }
 
-  componentDidMount(){
-    console.log('mounted');
+  populateTodos() {
+    const {tasks} = this.state;
+    const {todos} = this.state;
 
+    for (var i = 0; i < tasks.length; i++) {
+      this.setState({todos: [tasks[i].name, ...todos]});
+    }
+  }
+
+  componentDidMount(){
     fetch('/showTodos', {
       method: 'GET',
       headers: {
@@ -23,7 +30,7 @@ class ToDo extends React.Component {
       },
     })
       .then((response) => { return response.json(); })
-      .then((json) => { console.log(json); this.setState(json); });
+      .then((json) => { console.log(json); this.setState(json); this.populateTodos();});
   }
 
   onAddTodo = (text) => {
@@ -75,6 +82,7 @@ class ToDo extends React.Component {
           list={todos}
           onClickItem={this.onRemoveTodo}
         />
+        <Submit/>
       </div>
     )
   }
