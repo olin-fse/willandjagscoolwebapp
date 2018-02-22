@@ -98,8 +98,10 @@ func main() {
   })
 
   r.GET("/showTodos", func(c *gin.Context) {
+    res := []string{"task1", "task2"}
+
     c.JSON(200, gin.H{
-      "tasks": "task1",
+      "tasks": res,
     })
   })
 
