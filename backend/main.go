@@ -83,13 +83,13 @@ func main() {
   r.POST("/addTodo", func(c *gin.Context) {
     var json AddTodo
 
-    stmtIns, err := db.Prepare("INSERT INTO Tasks (user_id, name, difficulty, length) VALUES( ?, ?, ?, ? )")
-    if err != nil {
-      fmt.Println(err)
-    }
-    _,err = stmtIns.Exec(1,json,"1","1")
-
     if err := c.ShouldBindJSON(&json); err == nil {
+      stmtIns, err := db.Prepare("INSERT INTO Tasks (user_id, name, difficulty, length) VALUES( ?, ?, ?, ? )")
+      if err != nil {
+        fmt.Println(err)
+      }
+      _,err = stmtIns.Exec(1,json,"1","1")
+      
       fmt.Println(json)
       c.JSON(200, gin.H{
         "task": json,
@@ -101,7 +101,7 @@ func main() {
     res := []string{"task1", "task2"}
 
     c.JSON(200, gin.H{
-      "tasks": res,
+      "todos": res,
     })
   })
 
