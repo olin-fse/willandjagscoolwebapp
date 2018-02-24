@@ -18,9 +18,12 @@ class ToDo extends React.Component {
     const {tasks} = this.state;
     const {todos} = this.state;
 
+    var task_list = []
+
     for (var i = 0; i < tasks.length; i++) {
-      this.setState({todos: [tasks[i].name, ...todos]});
+      task_list.push(tasks[i].name);
     }
+    this.setState({todos: [...task_list, ...todos]});
   }
 
   componentDidMount(){
@@ -73,7 +76,7 @@ class ToDo extends React.Component {
       },
       body: JSON.stringify({deletedItem})
     })
-      .then((response) => { console.log(response); return response.json(); })
+      .then((response) => { return response.json(); })
       .then((json) => { 
         this.setState({
           todos: todos.filter((todo, i) => i !== index),
