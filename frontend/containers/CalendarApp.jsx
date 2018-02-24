@@ -16,13 +16,18 @@ class CalendarApp extends React.Component {
     }
 
     onSubmitToCal(toDos) {
-      const {data} = this.state;
+   //   const {data} = this.state;
       console.log(toDos);
 
       this.setState({
         data: toDos,
       })
-      console.log(data);
+
+      this.forceUpdate;
+      console.log(this.state);
+
+      console.log("data");
+      console.log(this.state.data);
 
     }
 

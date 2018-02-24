@@ -24,9 +24,29 @@ class BasicCalendar extends React.Component {
         ]
   }
 
-  componentWillUpdate() {
-    console.log("got here...")
-    console.log(this.props.data);
+  // componentWillUpdate() {
+  //   console.log("got here...")
+  //   console.log(this.props.data);
+  // }
+
+  componentWillReceiveProps(props) {
+    const {dummyEvents} = this.state;
+
+    // const {tasks} = props.data;
+    var calEntries = []
+
+    for (var i = 0; i < props.data.length; i++) {
+      var day = Math.floor(Math.random() * 30) + 1
+      calEntries.push(
+        {
+          allDay: false,
+          endDate: new Date('February ' + day +', 2018 11:13:00'),
+          startDate: new Date('February ' + day +', 2018 11:13:00'),
+          title: props.data[i],
+        }
+      );
+    }
+    this.setState({dummyEvents: [...calEntries, ...dummyEvents]});
   }
 
   render() {
