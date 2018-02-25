@@ -26,7 +26,7 @@ type AddTodo struct {
 }
 
 type DeleteTodo struct {
-  Name string `json:"deletedItem" binding:"required"`
+	Name string `json:"deletedItem" binding:"required"`
 }
 
 type Task struct {
@@ -54,11 +54,11 @@ func main() {
 
 		var json Login
 
-    err := c.ShouldBindJSON(&json)
-    if err != nil {
-      fmt.Println(err.Error())
-      c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-    }
+		err := c.ShouldBindJSON(&json)
+		if err != nil {
+			fmt.Println(err.Error())
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		}
 
 		var user_id int
 		var password string
@@ -72,19 +72,32 @@ func main() {
 
 		switch {
 		case err2 == sql.ErrNoRows:
-			fmt.Println("No user")
+			c.Status(http.StatusBadRequest)
 		case err2 != nil:
-			fmt.Println(err2)
+			c.Status(http.StatusInternalServerError)
 		default:
 			if json.Password == password {
 				fmt.Printf("Username is %s\n", json.User)
-				c.JSON(200, gin.H{
+				c.JSON(http.StatusOK, gin.H{
 					"user": User{user_id, json.User},
 				})
 			} else {
+				c.Status(http.StatusUnauthorized)
 				fmt.Println("wrong password")
 			}
 		}
+
+		//hieu's reccomended structure of this function
+		// err = service.Login(user_id, password)
+
+		// if err != nil {
+		// 	c.Status(http.StatusBadRequest)
+		// 	return
+		// }
+
+		// c.JSON(http.StatusOK, gin.H{
+		// 	"user": User{user_id, json.User},
+		// })
 
 	})
 
@@ -111,27 +124,27 @@ func main() {
 		c.JSON(200, nil)
 	})
 
-  r.POST("/deleteTodo", func(c *gin.Context) {
-    var json DeleteTodo
+	r.POST("/deleteTodo", func(c *gin.Context) {
+		var json DeleteTodo
 
-    err := c.ShouldBindJSON(&json)
-    if err != nil {
-      fmt.Println(err.Error())
-      c.JSON(500, nil)
-    }
-    stmtIns, err := db.Prepare("DELETE FROM Tasks WHERE name=?")
-    if err != nil {
-      fmt.Println(err)
-    }
+		err := c.ShouldBindJSON(&json)
+		if err != nil {
+			fmt.Println(err.Error())
+			c.JSON(500, nil)
+		}
+		stmtIns, err := db.Prepare("DELETE FROM Tasks WHERE name=?")
+		if err != nil {
+			fmt.Println(err)
+		}
 
-    _, err = stmtIns.Exec(json.Name)
-    fmt.Println(json)
-    if err != nil {
-      c.JSON(500, nil)
-    }
+		_, err = stmtIns.Exec(json.Name)
+		fmt.Println(json)
+		if err != nil {
+			c.JSON(500, nil)
+		}
 
-    c.JSON(200, nil)
-  })
+		c.JSON(200, nil)
+	})
 
 	r.GET("/showTodos", func(c *gin.Context) {
 
