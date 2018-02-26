@@ -50,8 +50,7 @@ func LoginHandler(c *gin.Context) {
 
   fmt.Println(json.Password)
 
-  err2 := db.QueryRow("SELECT user_id FROM Users where display_name=?", json.User).Scan(&user_id)
-  db.QueryRow("SELECT password FROM Users where display_name=?", json.User).Scan(&password)
+  err2 := db.QueryRow("SELECT user_id, password FROM Users where display_name=?", json.User).Scan(&user_id, &password)
 
   switch {
     case err2 == sql.ErrNoRows:
