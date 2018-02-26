@@ -49,4 +49,14 @@ var _ = Describe("Test API Endpoints", func() {
     res := makeLoginRequest("j", "test")
     Expect(res.StatusCode).To(Equal(400))
   })
+
+  It("POST /login correct username wrong password", func() {
+    res := makeLoginRequest("jag", "123")
+    Expect(res.StatusCode).To(Equal(400))
+  })
+
+  It("POST /login correct username and password", func() {
+    res := makeLoginRequest("jag", "password")
+    Expect(res.StatusCode).To(Equal(200))
+  })
 })

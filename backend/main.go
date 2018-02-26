@@ -53,23 +53,21 @@ func LoginHandler(c *gin.Context) {
   err2 := db.QueryRow("SELECT user_id FROM Users where display_name=?", json.User).Scan(&user_id)
   db.QueryRow("SELECT password FROM Users where display_name=?", json.User).Scan(&password)
 
-  fmt.Println(err2)
-
   switch {
-  case err2 == sql.ErrNoRows:
-    c.Status(http.StatusBadRequest)
-  case err2 != nil:
-    c.Status(http.StatusInternalServerError)
-  default:
-    if json.Password == password {
-      fmt.Printf("Username is %s\n", json.User)
-      c.JSON(http.StatusOK, gin.H{
-        "user": User{user_id, json.User},
-      })
-    } else {
-      c.Status(http.StatusUnauthorized)
-      fmt.Println("wrong password")
-    }
+    case err2 == sql.ErrNoRows:
+      c.Status(http.StatusBadRequest)
+    case err2 != nil:
+      c.Status(http.StatusInternalServerError)
+    default:
+      if json.Password == password {
+        fmt.Printf("Username is %s\n", json.User)
+        c.JSON(http.StatusOK, gin.H{
+          "user": User{user_id, json.User},
+        })
+      } else {
+        c.Status(http.StatusUnauthorized)
+        fmt.Println("wrong password")
+      }
   }
 
   //hieu's reccomended structure of this function
