@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+  "os"
 
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
@@ -32,8 +33,17 @@ type DeleteTodo struct {
 }
 
 type Task struct {
+  TaskId string `json:"taskId"`
 	UserId string `json:"userId"`
 	Name   string `json:"name"`
+}
+
+type MySqlConfig struct {
+  username string
+  password string
+  host     string
+  port     string
+  database string
 }
 
 func LoginHandler(c *gin.Context) {
@@ -140,7 +150,7 @@ func showTodos(c *gin.Context) {
 
   for rows.Next() {
     var task Task
-    if err := rows.Scan(&task.UserId, &task.Name); err != nil {
+    if err := rows.Scan(&task.TaskId, &task.UserId, &task.Name); err != nil {
       fmt.Println(err)
     } else {
       res = append(res, task)
@@ -152,7 +162,14 @@ func showTodos(c *gin.Context) {
 }
 
 func main() {
-  SetupDb()
+  connectToDb(&MySqlConfig{
+    os.Getenv("DB_USERNAME"),
+    os.Getenv("DB_PASSWORD"),
+    os.Getenv("DB_HOST"),
+    os.Getenv("DB_PORT"),
+    os.Getenv("DB_NAME"),
+  })
+
 	r := Handlers()
 	r.Run(":3000")
 
@@ -175,11 +192,19 @@ func Handlers() *gin.Engine {
   return r
 }
 
-func SetupDb() {
-  localDb, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/willandjagscooldb")
+func connectToDb(config *MySqlConfig) {
+  dsn := fmt.Sprintf(
+    "%s:%s@tcp(%s:%s)/%s",
+    config.username,
+    config.password,
+    config.host,
+    config.port,
+    config.database,
+  )
+  fmt.Println(dsn);
+  localDb, err := sql.Open("mysql", dsn)
   if err != nil {
-    fmt.Println("error occured")
-    panic(err.Error())
+    panic(err)
   }
 
   db = localDb
