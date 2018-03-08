@@ -22,6 +22,6 @@ install:
   # - go get -v -t ./...
   - export PATH=$PATH:$HOME/gopath/bin
 
-script: go test < backend
+script: go test -v ./backend
   
   # ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --compilers=2
