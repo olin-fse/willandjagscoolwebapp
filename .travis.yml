@@ -7,13 +7,14 @@ env:
   global:
     - TEST_DB_USERNAME=user
     - TEST_DB_PASSWORD=password
-    - TEST_DB_NAME=willandjagscooldb
+    - TEST_DB_NAME=willandjagscooltestdb
     - TEST_DB_PORT=3306
 
 services:
   - mysql 
 
 before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS willandjagscooltestdb;'
   - mysql -u root --password="" < backend/schema.sql
 
 install:
