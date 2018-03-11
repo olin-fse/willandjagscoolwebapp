@@ -26,6 +26,8 @@ install:
   - export PATH=$PATH:$HOME/gopath/bin
 
 
-script: cd backend && go test
+script: 
+  - source backend/env
+  - cd backend && go test
   
   # ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --compilers=2
