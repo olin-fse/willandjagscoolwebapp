@@ -21,18 +21,18 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      user: null
+      userId: null
     };
   }
 
-  setUser = (user) => {
-    this.setState({ user });
+  setUser = (userId) => {
+    this.setState({ userId });
   };
 
   render () {
-    if (this.state.user) {
+    if (this.state.userId) {
       console.log('success')
-      return <CalendarApp user={this.state.user}/>;
+      return <CalendarApp userId={this.state.userId}/>;
     } else{
       console.log('fail')
       return <LocalLogin setUser={this.setUser}/>;

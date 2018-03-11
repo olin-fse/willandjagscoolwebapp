@@ -1,27 +1,25 @@
 package main
 
 import (
-  "fmt"
   _ "github.com/go-sql-driver/mysql"
 )
 
-type LoginData struct {
-  User     string `json:"username" binding:"required"`
-  Password string `json:"password" binding:"required"`
+const (
+  LOGIN_QUERY = "SELECT user_id FROM Users where display_name=? and password=?"
+)
+
+type User struct {
+  Id       int
+  Username string
 }
 
-func Login(int user_id, string password) {
-  var json LoginData
+func LoginService(json *LoginRequest) (int, error) {
+  var userId int
 
-  // err := c.ShouldBindJSON(&json)
-  // fmt.Println(json.User, json.Password)
-  // if err != nil {
-  //   c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-  // }
+  err := db.QueryRow(LOGIN_QUERY, json.Username, json.Password).Scan(&userId)
+  if err != nil {
+    return -1, err
+  }
 
-  fmt.Println(json.Password)
-
-  err2 := db.QueryRow("SELECT user_id, password FROM Users where display_name=?", json.User).Scan(user_id, password)
-
-  return err2
+  return userId, nil
 }
