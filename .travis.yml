@@ -19,8 +19,12 @@ before_install:
 install:
   - go get -v github.com/onsi/ginkgo/ginkgo
   - go get -v github.com/onsi/gomega
+  - go get -v github.com/gin-contrib/static
+  - go get -v github.com/gin-gonic/gin
+  - go get -v github.com/go-sql-driver/mysql
   #  - go get -v -t ./...
   - export PATH=$PATH:$HOME/gopath/bin
+
 
 script: cd backend && go test
   
