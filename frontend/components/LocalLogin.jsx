@@ -46,7 +46,7 @@ class LocalLogin extends Component {
       body: JSON.stringify(data)
     })
       .then((response) => { return response.json(); })
-      .then((json) => { this.props.setUser(json.user); });
+      .then((json) => { this.props.setUser(json.userId); });
   }
 
   render(){
@@ -54,13 +54,14 @@ class LocalLogin extends Component {
       <form id="local-login" className="form-signin" onSubmit={this.onLogin}>
         <h2>Log In to an Existing Account</h2>
         <input
+          id="username"
           placeholder="Username"
           value={this.state.username}
-          min
           onChange={this.handleUsernameChange}
         />
         <br />
         <input
+          id="password"
           placeholder="Password"
           value={this.state.password}
           onChange={this.handlePasswordChange}

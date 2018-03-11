@@ -13,13 +13,8 @@ import (
 
 var db *sql.DB
 
-type User struct {
-	Id       int
-	Username string
-}
-
-type Login struct {
-	User     string `json:"username" binding:"required"`
+type LoginRequest struct {
+	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
 
@@ -47,49 +42,22 @@ type MySqlConfig struct {
 }
 
 func LoginHandler(c *gin.Context) {
-  var json Login
+  var json LoginRequest
 
   err := c.ShouldBindJSON(&json)
-  fmt.Println(json.User, json.Password)
   if err != nil {
-    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    c.Status(http.StatusBadRequest)
   }
 
-  var user_id int
-  var password string
-
-  fmt.Println(json.Password)
-
-  err2 := db.QueryRow("SELECT user_id, password FROM Users where display_name=?", json.User).Scan(&user_id, &password)
-
-  switch {
-    case err2 == sql.ErrNoRows:
-      c.Status(http.StatusBadRequest)
-    case err2 != nil:
-      c.Status(http.StatusInternalServerError)
-    default:
-      if json.Password == password {
-        fmt.Printf("Username is %s\n", json.User)
-        c.JSON(http.StatusOK, gin.H{
-          "user": User{user_id, json.User},
-        })
-      } else {
-        c.Status(http.StatusUnauthorized)
-        fmt.Println("wrong password")
-      }
+  userId, err := LoginService(&json)
+  if err != nil {
+   c.Status(http.StatusBadRequest)
+   return
   }
 
-  //hieu's reccomended structure of this function
-  // err = service.Login(user_id, password)
-
-  // if err != nil {
-  //  c.Status(http.StatusBadRequest)
-  //  return
-  // }
-
-  // c.JSON(http.StatusOK, gin.H{
-  //  "user": User{user_id, json.User},
-  // })
+  c.JSON(http.StatusOK, gin.H{
+   "userId": userId,
+  })
 }
 
 func addTodo(c *gin.Context) {

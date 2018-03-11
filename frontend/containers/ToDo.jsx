@@ -39,9 +39,9 @@ class ToDo extends React.Component {
 
   onAddTodo = (text) => {
     const {todos} = this.state
-
+    console.log(this.props);
     const data = {
-      userId: this.props.user.Id,
+      userId: this.props.userId,
       text: text,
     }
 

@@ -6,8 +6,9 @@
   "main": "",
   "scripts": {
     "start": "npm run build & npm run backend",
-    "backend": "cd backend; go run main.go",
-    "build": "webpack -d --config webpack.config.js --watch"
+    "backend": "cd backend; go run main.go service.go",
+    "build": "webpack -d --config webpack.config.js --watch",
+    "test": "./node_modules/.bin/wdio wdio.conf.js"
   },
   "dependencies": {
     "babel-runtime": "6.26.0",
@@ -19,14 +20,9 @@
     "webpack": "3.10.0"
   },
   "devDependencies": {
-    "babel-core": "6.26.0",
-    "babel-eslint": "7.2.3",
-    "babel-loader": "7.1.2",
-    "babel-plugin-transform-runtime": "6.23.0",
-    "babel-preset-env": "1.6.1",
-    "babel-preset-react": "6.24.1",
-    "babel-preset-stage-1": "6.24.1",
-    "bootstrap": "^4.0.0",
+    "chai": "^4.1.2",
+    "chai-webdriverio": "^0.4.3",
+    "chromedriver": "^2.36.0",
     "cldr-data": ">=25",
     "css-loader": "0.28.9",
     "eslint": "4.17.0",
@@ -47,6 +43,11 @@
     "popper.js": "^1.12.9",
     "react-bootstrap": "^0.28.0",
     "style-loader": "0.20.1",
+    "wdio-chromedriver-service": "^0.1.2",
+    "wdio-jasmine-framework": "^0.3.2",
+    "wdio-mocha-framework": "^0.5.12",
+    "wdio-selenium-standalone-service": "0.0.9",
+    "webdriverio": "^4.12.0",
     "webpack": "3.10.0",
     "webpack-dev-server": "2.11.1"
   }
