@@ -1,0 +1,4 @@
+export TEST_DB_USERNAME=user
+export TEST_DB_PASSWORD=password
+export TEST_DB_NAME=willandjagscooldb
+export TEST_DB_PORT=3306
