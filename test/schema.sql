@@ -1,5 +1,5 @@
 # Create TestUser
-# CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
 GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP ON *.* to 'user'@'localhost';
 
 # Create DB
