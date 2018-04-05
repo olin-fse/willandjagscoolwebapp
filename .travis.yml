@@ -27,7 +27,7 @@ install:
 
 
 script: 
-  - source backend/env
+  - source setup/test
   - cd backend && go test
   
   # ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --compilers=2
