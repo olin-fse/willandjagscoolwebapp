@@ -11,13 +11,13 @@ RUN apt-get install -y nodejs
 # Expose proper port
 EXPOSE 3000
 
-# Install all dependencies of the current project.
-COPY package.json package.json
-RUN npm install
-
 # Copy all local files into the image.
 COPY . .
-RUN go get ./...
+RUN npm install
+RUN go get github.com/gin-contrib/static
+RUN go get github.com/gin-gonic/gin
+RUN go get github.com/go-sql-driver/mysql
+# RUN go build ./...
 
 # Build for production.
-CMD ["npm","start"]
+CMD ["npm", "start"]
