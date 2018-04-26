@@ -1,0 +1,18 @@
+version: '2'
+services:
+  web:
+    build: ./..
+    ports:
+     - "3000:3000"
+    environment:
+      - DB_HOST=database
+  database:
+    image: "mysql" 
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_USER=user
+      - MYSQL_ROOT_PASSWORD=password
+
+    volumes:
+    - ./init:/docker-entrypoint-initdb.d/:ro
